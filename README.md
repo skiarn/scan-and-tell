@@ -16,7 +16,9 @@ Every object has a story to tell, if you know how to listen
 * Show a setting menu where i can input openai authorization key
 
 ## 🛠 Tech Stack
-- **Frontend:** React 
+- **Frontend:** React typescript help me follow  the readme  and implement it
+
+
 - **Object Recognition:** 
   - Phase 1: Text input only (fast prototype)
   - Phase 2: Use copilot 3d to generate 3d models
