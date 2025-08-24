@@ -2,7 +2,7 @@ import React, { use, useState } from 'react';
 import OpenAI from 'openai';
 import { useOpenAIKey } from '../../shared/context/OpenAIKeyContext';
 
-const openai = new OpenAI();
+
 
 type StoryAssistantProps = {
   input: string;
@@ -13,7 +13,21 @@ const StoryAssistant: React.FC<StoryAssistantProps> = ({ input }) => {
   const [story, setStory] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const apiKey = useOpenAIKey()
+  const apiKey = useOpenAIKey();
+  
+  if (!apiKey.openaiKey) {
+    return (
+      <div className="story-assistant">
+        <h2>AI Story Assistant</h2>
+        <p>Please set your OpenAI API key in settings to use the story assistant.</p>
+      </div>
+    );
+  }
+
+  const openai = new OpenAI({
+    apiKey: apiKey.openaiKey,
+    dangerouslyAllowBrowser: true,
+  });
 
   const handleGenerateStory = async () => {
     setLoading(true);
@@ -21,7 +35,7 @@ const StoryAssistant: React.FC<StoryAssistantProps> = ({ input }) => {
 
     try {
       const assistant = await openai.beta.assistants.create({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         name: 'Story Builder',
         instructions: 'You are a creative writing assistant. Help users turn ideas into compelling stories.',
       });
@@ -65,14 +79,7 @@ const StoryAssistant: React.FC<StoryAssistantProps> = ({ input }) => {
     setLoading(false);
   };
 
-  if (!apiKey) {
-    return (
-        <div className="story-assistant">
-          <h2>AI Story Assistant</h2>
-          <p>Please set your OpenAI API key in settings to use the story assistant.</p>
-        </div>
-    );
-  }
+
   return (
 
     <div className="story-assistant">

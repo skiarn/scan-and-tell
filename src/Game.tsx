@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Setting from './features/setting/setting';
-import StoryAssistant from './ai/assistant/StoryAssistant';
-
+import StoryAssistant from './ai/assistant/FirebaseAIStoryAssistant';
 interface Story {
   title: string;
   content: string;
@@ -59,7 +58,8 @@ const Game: React.FC = () => {
           placeholder="Type an object name..."
         />
         <button onClick={handleScan}>Scan</button>
-        <StoryAssistant input={objectName} / >
+
+        <StoryAssistant initialStoryIdea={objectName} / >
       </div>
       {story && (
         <div className="story-card">
