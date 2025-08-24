@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Setting from './features/setting/setting';
+import StoryAssistant from './ai/assistant/StoryAssistant';
 
 interface Story {
   title: string;
@@ -25,7 +27,6 @@ const Game: React.FC = () => {
   const [story, setStory] = useState<Story | null>(null);
   const [storybook, setStorybook] = useState<Story[]>([]);
   const [showSettings, setShowSettings] = useState(false);
-  const [openaiKey, setOpenaiKey] = useState('');
 
   const handleScan = () => {
     if (objectName.trim()) {
@@ -48,15 +49,7 @@ const Game: React.FC = () => {
         Settings
       </button>
       {showSettings && (
-        <div className="settings">
-          <label>OpenAI API Key: </label>
-          <input
-            type="password"
-            value={openaiKey}
-            onChange={e => setOpenaiKey(e.target.value)}
-            placeholder="Enter your OpenAI key"
-          />
-        </div>
+        <Setting />
       )}
       <div className="scan-section">
         <input
@@ -66,6 +59,7 @@ const Game: React.FC = () => {
           placeholder="Type an object name..."
         />
         <button onClick={handleScan}>Scan</button>
+        <StoryAssistant input={objectName} / >
       </div>
       {story && (
         <div className="story-card">
